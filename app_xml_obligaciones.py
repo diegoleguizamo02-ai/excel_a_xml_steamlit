@@ -259,7 +259,7 @@ if xls_file:
                     # Crear el elemento 'beneficiario'
                     beneficiario = ET.SubElement(beneficiarios, "{http://www.finagro.com.co/sit}beneficiario",
                                                  correoElectronico=str(row['Email_Beneficiario']) if is_valid(row['Email_Beneficiario']) else "",
-                                                 tipoAgrupacion="",
+                                                 tipoAgrupacion="1",
                                                  tipoPersona="2" if row['Tipo_de_Identificacion'] =="1" else "1",
                                                  tipoProductor=str(row['Tipo_de_productor']),
                                                  actividadEconomica=str(row['Producto_relacionado']),
