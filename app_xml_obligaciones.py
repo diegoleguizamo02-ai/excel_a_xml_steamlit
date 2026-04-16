@@ -241,7 +241,7 @@ if xls_file:
                                                programaCredito = str(row['Codigo_de_programa']),
                                                tipoOperacion="1",
                                                tipoMoneda="1",
-                                               tipoAgrupamiento="",
+                                               tipoAgrupamiento="1",
                                                numeroPagare= row['Numero_del_pagare'],
                                                numeroObligacionIntermediario= str(time.time_ns()),
                                                fechaSuscripcion=str(row['Fecha_de_suscripcion'] ),
@@ -261,7 +261,7 @@ if xls_file:
                     # Crear el elemento 'beneficiario'
                     beneficiario = ET.SubElement(beneficiarios, "{http://www.finagro.com.co/sit}beneficiario",
                                                  correoElectronico=str(row['Email_Beneficiario']) if is_valid(row['Email_Beneficiario']) else "",
-                                                 tipoAgrupacion="1",
+                                                 tipoAgrupacion="",
                                                  tipoPersona="2" if row['Tipo_de_Identificacion'] =="1" else "1",
                                                  tipoProductor=str(row['Tipo_de_productor']),
                                                  actividadEconomica=str(row['Producto_relacionado']),
