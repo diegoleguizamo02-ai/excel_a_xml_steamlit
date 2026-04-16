@@ -173,6 +173,8 @@ if xls_file:
             #cod_intermediario = st.text_input("Código del intermediario", value="203018")
             tipo_plan_checkbox = st.checkbox("¿Es un plan de pagos tipo bullet?", key="tipo_plan_checkbox")
             tipo_plan = 1 if tipo_plan_checkbox else 0
+            incentivo_checkbox = st.checkbox("¿Inscribir a incentivos?", key="incentivo_checkbox")
+            inscripcion_incentivo = "true" if incentivo_checkbox else "false"
             submitted = st.form_submit_button("Confirmar parámetros")
 
         if submitted:
@@ -332,6 +334,9 @@ if xls_file:
                                             fechaInicialEjecucion=str(fecha_Desembolso),
                                             fechaFinalEjecucion=str(fechaFinal))
                     # Se podrían agregar 'incentivo' y 'proyectosFinanciados' dentro de 'proyecto' si fuera necesario
+                    #INCENTIVOS
+                    incentivo = ET.SubElement(proyecto, "{http://www.finagro.com.co/sit}incentivo",
+                                            inscripcionIncentivo=inscripcion_incentivo)
                 
                     # Crear el elemento 'predios'
                     predios = ET.SubElement(obligacion, "{http://www.finagro.com.co/sit}predios")
