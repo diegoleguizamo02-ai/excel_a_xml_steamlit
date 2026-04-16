@@ -421,23 +421,55 @@ if xls_file:
                     cuota_capital = int(int(row['Capital_total'])/cantidad_cuotas)
                     
                     ult_cuota_capital = cuota_capital if int(row['Capital_total']) - (cantidad_cuotas*cuota_capital) == 0 else str(int(row['Capital_total']) - (Decimal(cantidad_cuotas-1)*Decimal(cuota_capital)))
-                    fHasta = pd.to_datetime(row['Fecha_de_suscripcion'],format ='%Y-%m-%d')
-                    for i in range(cantidad_cuotas-1):
+                  #  fHasta = pd.to_datetime(row['Fecha_de_suscripcion'],format ='%Y-%m-%d')
+                    #for i in range(cantidad_cuotas-1):
+                     #   meses = int(row['Tipo_plan_pagos'])
+                      #  fHasta = fHasta + relativedelta(months=meses)
+                       # cuotas = {
+                        #                "registro": str(i+1),
+                         #               "fechaAplicacionHasta":str(date(int(fHasta.strftime('%Y')),int(fHasta.strftime('%m')),10)),
+                          #              "conceptoRegistroCuota": "I" if tipo_plan == 1 else "K",
+                           #             "periodicidadIntereses": "PE",
+                            #            "periodicidadCapital": "" if tipo_plan == 1 else "PE",
+                             #           "tasaBaseBeneficiario": "5",
+                              #          "margenTasaBeneficiario": str(row['Puntos_IBR']),
+                               #         "valorCuotaCapital": "0" if tipo_plan == 1 else str(cuota_capital),
+                                #        "porcentajeCapitalizacionIntereses": "0.0",
+                                 #       "margenTasaRedescuento": "0"
+                                  #      }
+                    fHasta = pd.to_datetime(row['Fecha_de_suscripcion'], format='%Y-%m-%d')
+                    dia_desembolso = fecha_Desembolso_str.day
+                    
+                    for i in range(cantidad_cuotas - 1):
                         meses = int(row['Tipo_plan_pagos'])
                         fHasta = fHasta + relativedelta(months=meses)
+                    
+                        if tipo_plan == 1:
+                            fecha_aplicacion = str(date(int(fHasta.strftime('%Y')), int(fHasta.strftime('%m')), 10))
+                        else:
+                            fecha_aplicacion = str(
+                                (fecha_Desembolso_str + relativedelta(months=(i + 1) * meses))
+                            )
+                    
                         cuotas = {
-                                        "registro": str(i+1),
-                                        "fechaAplicacionHasta":str(date(int(fHasta.strftime('%Y')),int(fHasta.strftime('%m')),10)),
-                                        "conceptoRegistroCuota": "I" if tipo_plan == 1 else "K",
-                                        "periodicidadIntereses": "PE",
-                                        "periodicidadCapital": "" if tipo_plan == 1 else "PE",
-                                        "tasaBaseBeneficiario": "5",
-                                        "margenTasaBeneficiario": str(row['Puntos_IBR']),
-                                        "valorCuotaCapital": "0" if tipo_plan == 1 else str(cuota_capital),
-                                        "porcentajeCapitalizacionIntereses": "0.0",
-                                        "margenTasaRedescuento": "0"
-                                        }
-                            
+                            "registro": str(i + 1),
+                            "fechaAplicacionHasta": fecha_aplicacion,
+                            "conceptoRegistroCuota": "I" if tipo_plan == 1 else "K",
+                            "periodicidadIntereses": "PE",
+                            "periodicidadCapital": "" if tipo_plan == 1 else "PE",
+                            "tasaBaseBeneficiario": "5",
+                            "margenTasaBeneficiario": str(row['Puntos_IBR']),
+                            "valorCuotaCapital": "0" if tipo_plan == 1 else str(cuota_capital),
+                            "porcentajeCapitalizacionIntereses": "0.0",
+                            "margenTasaRedescuento": "0"
+                        }
+                    
+                        
+
+
+
+
+                        
                         datos_cuotas.append(cuotas)
                     cuotas = {
                                 "registro": str(cantidad_cuotas),
